@@ -39,12 +39,20 @@ not_found do
   redirect "/"
 end
 
+def each_chapter
+  @chapters.each_with_index do |name, index|
+    number = index + 1
+    contents = File.read("data/chp#{number}.txt")
+    yield number, name, contents
+  end
+end
+
 def chapters_matching(query)
   results = []
   return results if !query || query.empty?
 
-  @chapters.each_with_index do |chapter, index|
-    results << {number: index + 1, name: chapter} if chapter.include?(query)
+  each_chapter do |number, name, contents|
+    results << {number: number, name: name} if contents.include?(query)
   end
 
   results
