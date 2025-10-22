@@ -1,6 +1,10 @@
 require "sinatra"
 require "sinatra/reloader"
+require "tilt/erubi"
 
 get "/" do
-  File.read "public/template.html"
+  @title = "The Adventures of Sherlocks Home"
+  @toc = File.readlines("data/toc.txt")
+
+  erb :home
 end
