@@ -8,15 +8,22 @@
 
 <% if @search %>
   <% if @results.empty?  %>
-  <p>Sorry, no matches were found</p>
+    <p>Sorry, no matches were found</p>
   <% else %>
     <h2 class="content-subhead">Results for `<%= @search %>`</h2>
     <ul>
       <% @results.each do |chapter| %>
-        <li>
-          <a href="/chapters/<%= chapter[:number] %>"><%= chapter[:name] %></a>
-        </li>
+       <li><%= chapter[:name] %></li>
+        <ul>
+          <% chapter[:paragraphs].each do |index, text| %>
+            <li>
+              <a href="/chapters/<%= chapter[:number] %>#paragraph<%= index %>">
+                <%= highlight(text, @search) %>
+              </a>
+            </li>
+          <% end %>
+        </ul>
       <% end %>
-    </ul>
   <% end %>
+    </ul>
 <% end %>
