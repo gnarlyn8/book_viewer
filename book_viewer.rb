@@ -20,3 +20,11 @@ get "/chapters/:number" do
 
   erb :chapter
 end
+
+helpers do
+  def in_paragraphs(text)
+    text.split("\n\n").map do |paragraph|
+      "<p>#{paragraph}</p>"
+    end.join
+  end
+end
